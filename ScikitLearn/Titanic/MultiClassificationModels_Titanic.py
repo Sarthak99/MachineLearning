@@ -17,8 +17,8 @@ from sklearn.neighbors import RadiusNeighborsClassifier
 from sklearn.naive_bayes import GaussianNB
 from sklearn.tree import DecisionTreeClassifier
 
-titanic_df = pd.read_csv("C:\\Users\\sarth\\Documents\\ScikitLearn\\Datasets\\titanic\\new_train.csv")
+titanic_df = pd.read_csv("D:\\Git\\MachineLearning\\ScikitLearn\\Titanic\\dataset\\new_train.csv")
 
-features = list(titanic_df[1:])
+features = list(titanic_df.columns[1:])
 
 result_dict={}
