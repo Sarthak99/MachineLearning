@@ -32,15 +32,15 @@ def summarize_classification(y_test, y_pred):
     prec = precision_score(y_test, y_pred)
     recall = recall_score(y_test,y_pred)
     
-    return ("accuracy" : acc,
+    return {"accuracy" : acc,
             "precission" : prec,
             "recall" : recall,
-            "accuracy_count" : numm_acc)
+            "accuracy_count" : num_acc}
 
 #Helper function for building models
 def build_model(classifier_fn,
-                name_of_x_col,
                 name_of_y_col,
+                name_of_x_col,
                 dataset,
                 test_frac=0.2):
     
@@ -51,9 +51,9 @@ def build_model(classifier_fn,
     
     model = classifier_fn(x_train, y_train)
     
-    y_pred = model.predict(y_test)
+    y_pred = model.predict(x_test)
     
-    y_pred_train = model.predict(y_train)
+    y_pred_train = model.predict(x_train)
     
     train_summary = summarize_classification(y_train, y_pred_train)
     test_summary = summarize_classification(y_test, y_pred)
@@ -66,3 +66,53 @@ def build_model(classifier_fn,
     return {"training": train_summary,
             "test": test_summary,
             "confusion_matrix": model.crosstab}
+
+#Helper function to compare results
+def compare_results():
+    for key in result_dict:
+        print("classification" + key)
+        
+        print()
+        print("Training Data")
+        for score in result_dict[key]["training"]:
+            print(score, result_dict[key]["training"][score])
+           
+        print()
+        print("Test Data")
+        for score in result_dict[key]["test"]:
+            print(score, result_dict[key]["test"][score])
+            
+        print()
+
+#Creating regression models
+def logistic_fn(x_train,y_train):
+    model = LogisticRegression(solver="liblinear")
+    model.fit(x_train, y_train)
+    
+    return model
+
+result_dict["survived ~ logisitic"] = build_model(logistic_fn,
+                                                  'Survived',
+                                                  features,
+                                                  titanic_df)
+
+compare_results()
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
