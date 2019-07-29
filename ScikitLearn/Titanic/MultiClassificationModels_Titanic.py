@@ -85,6 +85,7 @@ def compare_results():
         print()
 
 #Creating regression models
+#Logistic Regression
 def logistic_fn(x_train,y_train):
     model = LogisticRegression(solver="liblinear")
     model.fit(x_train, y_train)
@@ -95,6 +96,18 @@ result_dict["survived ~ logisitic"] = build_model(logistic_fn,
                                                   'Survived',
                                                   features,
                                                   titanic_df)
+
+#Linear Discriminant Analysis (underlying PCA)
+def linear_discriminant_analysis(x_train,y_train,solver="svd"):
+    model = LinearDiscriminantAnalysis(solver=solver)
+    model.fit(x_train, y_train)
+    
+    return model
+
+result_dict["survived ~ linear_discriminant_analysis"] = build_model(linear_discriminant_analysis,
+                                                                     'Survived',
+                                                                     features[0:-1], #use dummy encoding by dropping one of the hot encoding columns to avoid variable collinearity  
+                                                                     titanic_df)
 
 compare_results()
         
