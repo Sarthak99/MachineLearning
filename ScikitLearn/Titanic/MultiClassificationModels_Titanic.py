@@ -109,6 +109,29 @@ result_dict["survived ~ linear_discriminant_analysis"] = build_model(linear_disc
                                                                      features[0:-1], #use dummy encoding by dropping one of the hot encoding columns to avoid variable collinearity  
                                                                      titanic_df)
 
+#Quadratic Discriminant Analysis
+def quadratic_discriminant_analysis(x_train, y_train):
+    model = QuadraticDiscriminantAnalysis()
+    model.fit(x_train,y_train)
+    
+    return model
+
+result_dict["survived ~ quadratic_disriminant_analysis"] = build_model(quadratic_discriminant_analysis,
+                                                                       "Survived",
+                                                                       features[0:-1],
+                                                                       titanic_df)
+
+def sgd_fn(x_train, y_train, max_iter=100, tol=1e-3):
+    model=SGDClassifier(max_iter=max_iter, tol=tol)
+    model.fit(x_train, y_train)
+    
+    return model 
+
+result_dict["survived ~ Stochastic Gradient Classifier"] = build_model(sgd_fn,
+                                                                       "Survived",
+                                                                       features,
+                                                                       titanic_df)
+
 compare_results()
         
         
