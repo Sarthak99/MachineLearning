@@ -121,7 +121,7 @@ result_dict["survived ~ quadratic_disriminant_analysis"] = build_model(quadratic
                                                                        features[0:-1],
                                                                        titanic_df)
 
-def sgd_fn(x_train, y_train, max_iter=100, tol=1e-3):
+def sgd_fn(x_train, y_train, max_iter=1000, tol=1e-3):
     model=SGDClassifier(max_iter=max_iter, tol=tol)
     model.fit(x_train, y_train)
     
@@ -132,23 +132,26 @@ result_dict["survived ~ Stochastic Gradient Classifier"] = build_model(sgd_fn,
                                                                        features,
                                                                        titanic_df)
 
+def linear_svc_fn(x_train,y_train, C=1.0, max_iter=1000, tol=1e-3):
+    model = LinearSVC(C=C, max_iter=max_iter, tol=tol, dual=False)
+    model.fit(x_train, y_train)
+    
+    return model
+
+result_dict["survived ~ Linear SVC"] = build_model(linear_svc_fn,
+                                                   "Survived",
+                                                   features,
+                                                   titanic_df)
+
+def radius_neighbour_fn(x_train, y_train, radius=40.0):
+    model = RadiusNeighborsClassifier(radius=radius)
+    model.fit(x_train, y_train)
+    
+    return model
+
+result_dict["survived ~ radius_neighbours"] = build_model(radius_neighbour_fn,
+                                                          "Survived",
+                                                          features,
+                                                          titanic_df)
+
 compare_results()
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
