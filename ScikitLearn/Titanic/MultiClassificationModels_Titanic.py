@@ -154,4 +154,26 @@ result_dict["survived ~ radius_neighbours"] = build_model(radius_neighbour_fn,
                                                           features,
                                                           titanic_df)
 
+def decision_tree_fn(x_train, y_train, max_depth=None, max_features=None):
+    model = DecisionTreeClassifier(max_depth=max_depth, max_features=max_features)
+    model.fit(x_train, y_train)
+    
+    return model
+
+result_dict["survived ~ decision_tree"] = build_model(decision_tree_fn,
+                                                       "Survived",
+                                                       features,
+                                                       titanic_df)
+
+def naive_bayes_fn(x_train,y_train, priors=None):
+    model = GaussianNB(priors=priors)
+    model.fit(x_train, y_train)
+    
+    return model
+
+result_dict["survived ~ naive_bayes"] = build_model(naive_bayes_fn,
+                                                   "Survived",
+                                                   features,
+                                                   titanic_df)
+
 compare_results()
